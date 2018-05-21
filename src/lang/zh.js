@@ -3,6 +3,7 @@ export default {
     apiCategory: 'api分类管理',
     apiCategorySearch: 'api分类查询',
     apiCategoryDetail: 'api分类详情',
+    apiCategoryAdd: 'api分类新增',
     billList: '账单列表',
     dashboard: '首页',
     introduction: '简述',

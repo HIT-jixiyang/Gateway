@@ -1,9 +1,13 @@
 const tagsView = {
   state: {
     visitedViews: [],
-    cachedViews: []
+    cachedViews: [],
+    currentView: null
   },
   mutations: {
+    SET_CURRENT_VIEW: (state, view) => {
+      state.currentView = view
+    },
     ADD_VISITED_VIEWS: (state, view) => {
       if (state.visitedViews.some(v => v.path === view.path)) return
       state.visitedViews.push({
@@ -51,6 +55,9 @@ const tagsView = {
     }
   },
   actions: {
+    setCurrentView({ commit }, view) {
+      commit('SET_CURRENT_VIEW', view)
+    },
     addVisitedViews({ commit }, view) {
       commit('ADD_VISITED_VIEWS', view)
     },

@@ -86,7 +86,7 @@
           <span>query参数</span>
       </div>
       <el-table
-        :data="params.path"
+        :data="params.query"
         border
         style="width: 100%">
         <el-table-column

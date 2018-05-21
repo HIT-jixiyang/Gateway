@@ -12,6 +12,7 @@
           </el-option>
         </el-select>
         <el-button class="filter-item" type="primary" icon="el-icon-search" @click="initPage">搜索</el-button>
+        <el-button class="filter-item" type="primary" style="float:right; margin-right:10px" icon="el-icon-edit" @click="addCategory">新增</el-button>
       </div>
     </div>
     <div class="api-table">
@@ -121,6 +122,9 @@ export default {
     showDetail (apiCategory) {
       GBFL.Cache.set('apiCategory', apiCategory)
       this.$router.push('/apicategory/detail')
+    },
+    addCategory () {
+      this.$router.push('/apicategory/add')
     }
   }
 }

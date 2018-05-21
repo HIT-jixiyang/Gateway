@@ -86,6 +86,7 @@ export const asyncRouterMap = [
     children: [
       {path: 'search',component: _import('apicategory/apiCategorySearch'),name: 'apiCategorySearch',meta: {title: 'apiCategorySearch',icon: 'lock'}},
       {path: 'detail',component: _import('apicategory/apiCategoryDetail'),name: 'apiCategoryDetail',meta: {title: 'apiCategoryDetail',icon: 'lock'}, hidden:true},
+      {path: 'add',component: _import('apicategory/apiCategoryAdd'),name: 'apiCategoryAdd',meta: {title: 'apiCategoryAdd',icon: 'lock'}, hidden:true},
     ]
   },
   {

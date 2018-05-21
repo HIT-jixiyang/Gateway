@@ -10,7 +10,9 @@ export default class BizService {
       getBillList: '/bill/list',
       // api列表
       getApiCategoryPageList: '/consumer/get-apicategory-list',
-      getApiCategoryDetail: '/consumer/get-apicategory-detail'
+      getApiCategoryDetail: '/consumer/get-apicategory-detail',
+      addApiCategory: '/admin/add-apicategory',
+      testXml: '/admin/test-param-xml',
     }
   }
   ajaxRequest (url, sendData, type, callback, contentType, async, beforeSend) {
@@ -111,6 +113,24 @@ export default class BizService {
   }
   getApiCategoryDetail (params, callback) {
     var url = this.manageHost + this.method.getApiCategoryDetail
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  addApiCategory (params, callback) {
+    var url = this.manageHost + this.method.addApiCategory
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  testXml (params, callback) {
+    var url = this.manageHost + this.method.testXml
     var type = 'post'
     return this.bizRequest(url, params, type, function (isOk, data) {
       if (callback) {
