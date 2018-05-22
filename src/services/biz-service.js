@@ -13,6 +13,9 @@ export default class BizService {
       getApiCategoryDetail: '/consumer/get-apicategory-detail',
       addApiCategory: '/admin/add-apicategory',
       testXml: '/admin/test-param-xml',
+
+      getApiPageList: '/admin/getapilist',
+      getUserPageList: '/admin/getuserlist'
     }
   }
   ajaxRequest (url, sendData, type, callback, contentType, async, beforeSend) {
@@ -138,5 +141,22 @@ export default class BizService {
       }
     }, 'application/json')
   }
-    
+  getApiPageList (params, callback) {
+    var url = this.manageHost + this.method.getApiPageList
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  getUserPageList (params, callback) {
+    var url = this.manageHost + this.method.getUserPageList
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
 }

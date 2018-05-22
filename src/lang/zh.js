@@ -1,5 +1,6 @@
 export default {
   route: {
+    check: '审核',
     apiCategory: 'api分类管理',
     apiCategorySearch: 'api分类查询',
     apiCategoryDetail: 'api分类详情',

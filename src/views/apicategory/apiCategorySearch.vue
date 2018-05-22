@@ -129,13 +129,12 @@ export default {
   }
 }
 </script>
-<style>
+<style scope>
 	.search-bar {
     margin-left: 10px;
 		margin-top: 20px;
 	}
 	.api-table {
-		margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
 	}

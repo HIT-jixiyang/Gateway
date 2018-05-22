@@ -78,6 +78,23 @@ export const asyncRouterMap = [
       }
     }]
   },
+
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/check',
+    meta: { roles: ['admin'] },
+    children: [{
+      path: 'list',
+      component: _import('admin/check'),
+      name: 'check',
+      meta: {
+        title: 'check',
+        icon: 'lock'
+      }
+    }]
+  },
+
   {
     path: '/apicategory',
     component: Layout,
