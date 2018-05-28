@@ -15,7 +15,9 @@ export default class BizService {
       testXml: '/admin/test-param-xml',
 
       getApiPageList: '/admin/getapilist',
-      getUserPageList: '/admin/getuserlist'
+      getUserPageList: '/admin/getuserlist',
+      checkUserAuth: '/admin/user-auth',
+      login: '/login'
     }
   }
   ajaxRequest (url, sendData, type, callback, contentType, async, beforeSend) {
@@ -152,6 +154,24 @@ export default class BizService {
   }
   getUserPageList (params, callback) {
     var url = this.manageHost + this.method.getUserPageList
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  checkUserAuth (params, callback) {
+    var url = this.manageHost + this.method.checkUserAuth
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  login (params, callback) {
+    var url = this.manageHost + this.method.login
     var type = 'post'
     return this.bizRequest(url, params, type, function (isOk, data) {
       if (callback) {

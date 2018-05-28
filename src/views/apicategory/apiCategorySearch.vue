@@ -97,8 +97,6 @@ export default {
       params.pageSize = this.filter.pageSize
       params[this.filter.type] = this.filter.value
       service.getApiCategoryPageList (params,(isOk, data) => {
-        console.log(data)
-        console.log(isOk)
         this.tableData = data.data.data
         this.tableDataLength = data.data.total
       })

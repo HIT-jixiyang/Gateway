@@ -72,13 +72,7 @@ export default {
       },
       date: [],
       tableDataLength: 1,
-      tableData: [{
-        app_id: 'dfadfsadcds',
-        api_name: '天气预报接口',
-        create_time: '2018-05-12',
-        request_time: '0.012',
-        response_code: '200'
-      }]
+      tableData: []
     };
   },
   created () {

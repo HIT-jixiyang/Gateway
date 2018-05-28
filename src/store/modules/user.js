@@ -4,7 +4,7 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const user = {
   state: {
     user: '',
-    status: '',
+    status: false,
     code: '',
     token: getToken(),
     name: '',
@@ -58,23 +58,33 @@ const user = {
         })
       })
     },
-
+    Login({ commit }, result){
+      return new Promise((resolve, reject) => {
+        commit('SET_TOKEN', result.token)
+        setToken(result.token)
+        commit('SET_ROLES', [result.role])
+        console.log(this.state)
+        resolve()
+      })
+    },
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token).then(response => {
-          if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
-            reject('error')
-          }
-          const data = response.data
-          commit('SET_ROLES', data.roles)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
+        commit('SET_STATUS', true)
+        resolve(state)
+        // getUserInfo(state.token).then(response => {
+        //   if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
+        //     reject('error')
+        //   }
+        //   const data = response.data
+        //   commit('SET_ROLES', data.roles)
+        //   commit('SET_NAME', data.name)
+        //   commit('SET_AVATAR', data.avatar)
+        //   commit('SET_INTRODUCTION', data.introduction)
+        //   resolve(response)
+        // }).catch(error => {
+        //   reject(error)
+        // })
       })
     },
 

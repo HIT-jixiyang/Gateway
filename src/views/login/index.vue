@@ -21,19 +21,26 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-
-      <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
-
-      <div class="tips">
+      
+      <div style="margin-bottom:30px;">
+        <el-select v-model="role" placeholder="请选择" style="width:100%">
+          <el-option key="2" label="管理员" value="2"></el-option>
+          <el-option key="1" label="提供商" value="1"></el-option>
+          <el-option key="0" label="消费者" value="0"></el-option>
+        </el-select>
+      </div>
+      <!-- <div class="tips">
         <span>{{$t('login.username')}} : admin</span>
         <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
       </div>
       <div class="tips">
         <span style="margin-right:18px;">{{$t('login.username')}} : editor</span>
         <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
+      </div> -->
+      <div>
+        <el-button type="primary" style="width:47%;" :loading="loading" @click.native.prevent="handleLogin">{{'登录'}}</el-button>        
+        <el-button style="width: 47%; float: right;" type="primary" @click="showDialog=true">{{'注册'}}</el-button>
       </div>
-
-      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button>
     </el-form>
 
     <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
@@ -51,6 +58,8 @@
 import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
+import BizService from '../../services/biz-service.js'
+var service = new BizService()
 
 export default {
   components: { LangSelect, SocialSign },
@@ -72,16 +81,17 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        username: 'ices@hitwh.com',
+        password: 'ices'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur'}],
+        password: [{ required: true, trigger: 'blur'}]
       },
       passwordType: 'password',
       loading: false,
-      showDialog: false
+      showDialog: false,
+      role: '2'
     }
   },
   methods: {
@@ -95,13 +105,41 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          var params = {
+            email: this.loginForm.username,
+            password: this.loginForm.password,
+            role: parseInt(this.role)
+          }
+
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: '/' })
-          }).catch(() => {
-            this.loading = false
+          service.login(params,(isOk, data) => {
+            if(isOk){
+              var result = {
+                token: data.data.token  
+              }
+              if(this.role == '0')
+                result.role = 'consumer'
+              else if(this.role == '1')
+                result.role = 'sp'
+              else if(this.role == '2')
+                result.role = 'admin'
+              
+              this.$store.dispatch('Login', result).then(() => {
+                this.loading = false
+                console.log(11111111)
+                this.$router.push({ path: '/' })
+              }).catch(() => {
+                this.loading = false
+              })
+            }else{
+              this.$message({
+                type: 'warning',
+                message: data.message
+              })
+              this.loading = false
+            }
           })
+          
         } else {
           console.log('error submit!!')
           return false
@@ -165,6 +203,15 @@ $light_gray:#eee;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+  .el-select {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: #454545;
+    .el-input__suffix {
+      right: -61px;
+    }
   }
 }
 </style>

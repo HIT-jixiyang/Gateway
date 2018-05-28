@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div class="filter-container">
-      <el-input style="width: 200px;" class="filter-item" v-model="filter.key" placeholder="请输入关键字" @keyup.enter.native="initPage"></el-input>
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="initPage">搜索</el-button>
-      <el-select style="width: 150px;margin-left: 20px;" v-model="tableType" class="filter-item" placeholder="请选择" @change="initPage">
-        <el-option label="服务消费者" value="0"/>
-        <el-option label="服务提供商" value="1"/>
-      </el-select>
+    <div class="search-bar">
+      <div class="filter-container">
+        <el-input style="width: 200px;" class="filter-item" v-model="filter.key" placeholder="请输入关键字" @keyup.enter.native="initPage"></el-input>
+        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="initPage">搜索</el-button>
+        <el-select style="width: 150px;margin-left: 20px;" v-model="tableType" class="filter-item" placeholder="请选择" @change="initPage">
+          <el-option label="服务消费者" value="0"/>
+          <el-option label="服务提供商" value="1"/>
+        </el-select>
+      </div>
     </div>
     <el-table
       v-if="tableType=='1'"
@@ -54,7 +56,7 @@
                 <el-button size="mini" type="info">详情</el-button>
               </el-dropdown-item>
               <el-dropdown-item divided>
-                <el-button size="mini" type="success">通过</el-button>
+                <el-button size="mini" type="success" @click="pass(scope.row)">通过</el-button>
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -107,7 +109,7 @@
                 <el-button size="mini" type="info">详情</el-button>
               </el-dropdown-item>
               <el-dropdown-item divided>
-                <el-button size="mini" type="success">通过</el-button>
+                <el-button size="mini" type="success" @click="pass(scope.row)">通过</el-button>
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -173,12 +175,37 @@ export default {
     },
     formatTag(val) {
       return val == 1 ? '已通过' : '未审核'
+    },
+    pass(row) {
+      console.log(row)
+      var params = {
+        role: parseInt(this.tableType)
+      }
+      if (this.tableType == '0')
+        params.consumer_id = row.consumer_id
+      else if(this.tableType == '1')
+        params.sp_id = row.sp_id
+
+      service.checkUserAuth (params,(isOk, data) => {
+        if(isOk == true){
+          this.$message({
+            type: 'success',
+            message: '通过成功'
+          })
+          this.initPage()
+        }else{
+          this.$message({
+            type: 'warning',
+            message: data.message
+          })
+        }
+      })
     }
   }
 }
 </script>
 <style scope>
-  .filter-container {
+  .search-bar {
     margin-left: 10px;
 		margin-top: 20px;
 	}
