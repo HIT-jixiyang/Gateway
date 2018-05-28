@@ -17,7 +17,13 @@ export default class BizService {
       getApiPageList: '/admin/getapilist',
       getUserPageList: '/admin/getuserlist',
       checkUserAuth: '/admin/user-auth',
-      login: '/login'
+      login: '/login',
+      //app管理
+      getAppList:'/consumer/get_applist_by_consumer_id',
+      addApp:'/consumer/addapp',
+      deleteApp:'/consumer/delete_app_by_app_id',
+      editApp:'/consumer/update_app_by_app_id',
+      getAppofApiDetail:'/consumer/get_api_categorylist_by_app_id'
     }
   }
   ajaxRequest (url, sendData, type, callback, contentType, async, beforeSend) {
@@ -30,7 +36,7 @@ export default class BizService {
     //     'usertoken': userToken.token
     //   }
     // }
-    
+
     $.ajax({
       url: url,
       type: type || 'GET',
@@ -98,6 +104,55 @@ export default class BizService {
     }, contentType, async, beforeSend)
     return result
   }
+
+  //App应用管理
+  getAppList(params,callback){
+    var url=this.manageHost+this.method.getAppList
+    var type='post'
+    return this.bizRequest(url,params,type,function (isOk, data) {
+      if(callback){
+        callback(isOk,data)
+      }
+    },'application/json')
+  }
+  getapicategorylistByappid(params,callback){
+    var url=this.manageHost+this.method.getAppofApiDetail
+    var type='post'
+    return this.bizRequest(url,params,type,function (isOk,data) {
+      if(callback){
+        callback(isOk,data)
+      }
+    },'application/json')
+  }
+  addApp (params, callback) {
+    var url = this.manageHost + this.method.addApp
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  editApp (params, callback) {
+    var url = this.manageHost + this.method.editApp
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  deleteApp (params, callback) {
+    var url = this.manageHost + this.method.deleteApp
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+
+  }
+
   getBillList (params, callback) {
     var url = this.manageHost + this.method.getBillList
     var type = 'post'
@@ -134,6 +189,7 @@ export default class BizService {
       }
     }, 'application/json')
   }
+
   testXml (params, callback) {
     var url = this.manageHost + this.method.testXml
     var type = 'post'

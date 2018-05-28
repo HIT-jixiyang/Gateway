@@ -108,9 +108,22 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path:'/appmanage',
+    component:Layout,
+    redirect:'/appmange/list',
+    meta:{title:'appmanage',roles:['admin'],icon:'lock'},
+    children:[
+      {path:'list',component:_import('appmanage/appList'),name:'appList',meta:{title:'appManage',icon:'lock'}},
+      {path:'add',component:_import('appmanage/appAdd'),name:'appAdd',meta:{title:'appAdd',icon:'lock'},hidden:true},
+      {path:'detail',component:_import('appmanage/appDetail'),name:'appDetail',meta:{title:'appDetail',icon:'lock'},hidden:true},
+      {path:'edit',component:_import('appmanage/appEdit'),name:'appEdit',meta:{title:'appEdit',icon:'lock'},hidden:true}
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',
+
     meta: { roles: ['admin'] }, // you can set roles in root nav
     children: [{
       path: 'index',
