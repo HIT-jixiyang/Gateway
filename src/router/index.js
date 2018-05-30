@@ -95,7 +95,27 @@ export const asyncRouterMap = [
       }
     }]
   },
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/apilist',
+    meta: { roles: ['admin'] },
+    children: [
+      {path: 'apilist', component: _import('api/apilist'), name: 'apilist', meta: {title: 'apilist', icon: 'lock'}},
+      {path: 'apidetail', component: _import('api/apidetail'), name: 'apidetail', meta: {title: 'apidetail', icon: 'lock'},hidden:true},
 
+    ]
+  },
+  {
+    path:'/sp',
+    component:Layout,
+    redirecr:'/sp/addapi',
+    meta:{title:'addapi',roles:['admin'],icon:'lock'},
+    children:[
+      {path:'addapi', component:_import('api/api'), name:'addapi', meta:{title:'addapi', icon:'lock'}},
+
+    ]
+  },
   {
     path: '/apicategory',
     component: Layout,

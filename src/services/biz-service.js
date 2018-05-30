@@ -18,12 +18,21 @@ export default class BizService {
       getUserPageList: '/admin/getuserlist',
       checkUserAuth: '/admin/user-auth',
       login: '/login',
+      //注册
+      consumerRegister:'/consumer_register',
+      spRegister:'/sp_register',
       //app管理
       getAppList:'/consumer/get_applist_by_consumer_id',
       addApp:'/consumer/addapp',
       deleteApp:'/consumer/delete_app_by_app_id',
       editApp:'/consumer/update_app_by_app_id',
-      getAppofApiDetail:'/consumer/get_api_categorylist_by_app_id'
+      getAppofApiDetail:'/consumer/get_api_categorylist_by_app_id',
+      //api接入
+      apiadd:'/sp/addapi',
+      sptestXml:'/sp/test-param-xml',
+      //api列表
+      getapilist:'/admin/getapilist',
+      getapidetail:'admin/getapidetail'
     }
   }
   ajaxRequest (url, sendData, type, callback, contentType, async, beforeSend) {
@@ -105,6 +114,26 @@ export default class BizService {
     return result
   }
 
+  //注册
+  spRegister(params,callback){
+    var url=this.manageHost+this.method.spRegister
+    var type='post'
+    return this.bizRequest(url,params,type,function (isOk, data) {
+      if(callback){
+        callback(isOk,data)
+      }
+    },'application/json')
+  }
+
+  consumerRegister(params,callback){
+    var url=this.manageHost+this.method.consumerRegister
+    var type='post'
+    return this.bizRequest(url,params,type,function (isOk, data) {
+      if(callback){
+        callback(isOk,data)
+      }
+    },'application/json')
+  }
   //App应用管理
   getAppList(params,callback){
     var url=this.manageHost+this.method.getAppList
@@ -151,6 +180,45 @@ export default class BizService {
       }
     }, 'application/json')
 
+  }
+
+
+  addapi(params,callback){
+    var url = this.manageHost+this.method.apiadd
+    //var url = '10.236.255.198:10002'
+    var type='post'
+    return this.bizRequest(url,params,type,function (isOk, data) {
+      if(callback) {
+        callback(isOk,data)
+      }
+    },'application/json')
+  }
+  getApiList(params,callback){
+    var url=this.manageHost+this.method.getapilist
+    var type='post'
+    return this.bizRequest(url,params,type,function (isOk, data) {
+      if(callback){
+        callback(isOk,data)
+      }
+    },'application/json')
+  }
+  sptestXml (params, callback) {
+    var url = this.manageHost + this.method.sptestXml
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
+  }
+  getApiDetail (params, callback) {
+    var url = this.manageHost + this.method.getapidetail
+    var type = 'post'
+    return this.bizRequest(url, params, type, function (isOk, data) {
+      if (callback) {
+        callback(isOk, data)
+      }
+    }, 'application/json')
   }
 
   getBillList (params, callback) {
