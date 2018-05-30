@@ -21,7 +21,7 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-      
+
       <div style="margin-bottom:30px;">
         <el-select v-model="role" placeholder="请选择" style="width:100%">
           <el-option key="2" label="管理员" value="2"></el-option>
@@ -38,8 +38,8 @@
         <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
       </div> -->
       <div>
-        <el-button type="primary" style="width:47%;" :loading="loading" @click.native.prevent="handleLogin">{{'登录'}}</el-button>        
-        <el-button style="width: 47%; float: right;" type="primary" @click="showDialog=true">{{'注册'}}</el-button>
+        <el-button type="primary" style="width:47%;" :loading="loading" @click.native.prevent="handleLogin">{{'登录'}}</el-button>
+        <el-button style="width: 47%; float: right;" type="primary" @click="handleReginser">{{'注册'}}</el-button>
       </div>
     </el-form>
 
@@ -102,6 +102,11 @@ export default {
         this.passwordType = 'password'
       }
     },
+    handleReginser(){
+      GBFL.Cache.set('type', this.role)
+        this.$router.push('/register')
+
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -115,7 +120,7 @@ export default {
           service.login(params,(isOk, data) => {
             if(isOk){
               var result = {
-                token: data.data.token  
+                token: data.data.token
               }
               if(this.role == '0')
                 result.role = 'consumer'
@@ -123,7 +128,7 @@ export default {
                 result.role = 'sp'
               else if(this.role == '2')
                 result.role = 'admin'
-              
+
               this.$store.dispatch('Login', result).then(() => {
                 this.loading = false
                 console.log(11111111)
@@ -139,7 +144,7 @@ export default {
               this.loading = false
             }
           })
-          
+
         } else {
           console.log('error submit!!')
           return false
