@@ -2,7 +2,8 @@
   <div>
     <div class="search-bar">
       <div class="filter-container">
-        <el-input style="width: 300px;" class="filter-item" placeholder="请输入关键字" v-model="filter.value" @keyup.enter.native="initPage"></el-input>
+        <el-input style="width: 300px;" class="filter-item" placeholder="请输入关键字" v-model="filter.value"
+                  @keyup.enter.native="initPage"></el-input>
         <el-select style="width: 150px;" class="filter-item" v-model="filter.type" placeholder="请选择">
           <el-option
             v-for="item in options"
@@ -43,11 +44,19 @@
           label="Api创建时间">
         </el-table-column>
         <el-table-column
+
+          label="Api是否可用">
+          <template slot-scope="scope">
+            {{formateAble(scope.row.api_enable)}}
+          </template>
+        </el-table-column>
+
+        <el-table-column
           label="操作"
           width="300px">
           <template slot-scope="scope">
             <el-button type="info" size="mini" @click="showDetail(scope.row)">详情</el-button>
-            <el-button type="info" size="mini" @click="pass(scope.row)">通过</el-button>
+            <el-button type="info" size="mini" :dispaly=" judgeRole()" @click="pass(scope.row)">通过</el-button>
             <el-button type="info" size="mini" @click="showDetail(scope.row)">适配</el-button>
           </template>
         </el-table-column>
@@ -66,20 +75,22 @@
   </div>
 </template>
 <script>
+
   import BizService from '../../services/biz-service.js'
+
   var service = new BizService()
   export default {
-    data () {
+    data() {
       return {
         tableData: [],
         tableDataLength: null,
         filter: {
           pageSize: 10,
           pageNo: 1,
-          key:'',
-          api_verify_state:'',
-          type:'',
-          api_adapt_state:''
+          key: '',
+          api_verify_state: '',
+          type: '',
+          api_adapt_state: ''
         },
         options: [{
           value: 'api_category_name',
@@ -87,51 +98,70 @@
         }]
       }
     },
-    created () {
+    created() {
       this.initPage()
     },
     methods: {
-      initPage () {
+      initPage() {
         var params = {}
         params.pageNo = this.filter.pageNo
         params.pageSize = this.filter.pageSize
-        params.key=this.filter.key
-        if(this.api_verify_state!=null){
-          params.api_verify_state=this.filter.api_verify_state
+        params.key = this.filter.key
+        params.id = localStorage.getItem("id")
+        params.role = localStorage.getItem("role")
+        if (this.api_verify_state != null) {
+          params.api_verify_state = this.filter.api_verify_state
         }
-        if(this.api_adapt_state!=null){
-          params.api_adapt_state=this.filter.api_adapt_state
+        if (this.api_adapt_state != null) {
+          params.api_adapt_state = this.filter.api_adapt_state
         }
 
-        service.getApiList(params,(isOk, data) => {
+        service.getApiList(params, (isOk, data) => {
           console.log(data)
           console.log(isOk)
-          this.tableData = data.data
-          this.tableDataLength = data.total
+          this.tableData = data.data.data
+          this.tableDataLength = data.data.total
+          if (localStorage.getItem("role") == 1) {
+
+          }
         })
       },
-      handleSizeChange (val) {
+      judgeRole() {
+        var role = localStorage.getItem("role");
+        if (role === 1) {
+          return none;
+        }
+
+      },
+      formateAble(val) {
+        if (val == 0)
+          return '不可用'
+        else
+          return '正常'
+
+      },
+      handleSizeChange(val) {
         this.filter.pageSize = val
         console.log(this.filter)
         this.initPage()
       },
-      handleCurrentChange (val) {
+      handleCurrentChange(val) {
         this.filter.pageNo = val
         // console.log(this.filter)
         this.initPage()
       },
-      formatMethod (val) {
+      formatMethod(val) {
         if (val == 0)
           return '未通过'
         else if (val == 1)
           return '已通过'
       },
-      showDetail (api) {
+      showDetail(api) {
         GBFL.Cache.set('api', api)
         this.$router.push('/admin/apidetail')
       },
-      pass(api){
-        api.api_verify_state=1
+      pass(api) {
+        api.api_verify_state = 1
       }
 
     }
@@ -142,6 +172,7 @@
     margin-left: 10px;
     margin-top: 20px;
   }
+
   .api-table {
     margin-left: 10px;
     margin-right: 10px;

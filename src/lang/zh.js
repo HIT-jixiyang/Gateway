@@ -1,9 +1,12 @@
 export default {
   route: {
-    check: '审核',
+    apilist: 'Api列表',
+    addapi: '创建api',
+    appManage: '应用管理',
+    check: '用户审核',
     apiCategory: 'api分类管理',
-    apiCategorySearch: 'api分类查询',
-    apiCategoryDetail: 'api分类详情',
+    apiCategorySearch: '服务查询',
+    apiCategoryDetail: '服务详情',
     apiCategoryAdd: 'api分类新增',
     billList: '账单列表',
     dashboard: '首页',

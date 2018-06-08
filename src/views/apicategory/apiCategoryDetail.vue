@@ -35,13 +35,13 @@
       <div slot="header" class="detail-card-header">
           <span>正确返回报文样例</span>
       </div>
-      <el-input type="textarea" autosize v-model="response.normal_response" disabled></el-input>
+      <el-input type="textarea" autosize v-model="apiCategory.api_category_normal_response" disabled></el-input>
     </el-card>
     <el-card class="infocard">
       <div slot="header" class="detail-card-header">
           <span>错误返回报文样例</span>
       </div>
-      <el-input type="textarea" autosize v-model="response.error_response" disabled></el-input>
+      <el-input type="textarea" autosize v-model="apiCategory.api_category_error_response" disabled></el-input>
     </el-card>
     <el-card class="infocard">
       <div slot="header" class="detail-card-header">

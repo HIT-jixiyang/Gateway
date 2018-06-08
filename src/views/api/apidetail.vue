@@ -19,7 +19,7 @@
         </el-row>
         <el-row>
           <el-col class="detailcell" :span="12"><span class="detailLabel">Api价格: </span>{{api.price}}</el-col>
-          <el-col class="detailcell" :span="12"><span class="detailLabel">配额: </span>{{api.centent}}</el-col>
+          <el-col class="detailcell" :span="12"><span class="detailLabel">配额: </span>{{api.content}}</el-col>
         </el-row>
         <el-row>
           <el-col class="detailcell" :span="24"><span class="detailLabel">Api功能描述: </span>{{api.api_description}}</el-col>
@@ -35,7 +35,7 @@
         border
         style="width: 100%">
         <el-table-column
-          prop="api_param_id"
+          prop="api_param_key"
           label="参数名称"
           width="150">
         </el-table-column>
@@ -71,11 +71,11 @@
         <span>query参数</span>
       </div>
       <el-table
-        :data="params.query"
+        :data="query"
         border
         style="width: 100%">
         <el-table-column
-          prop="api_param_id"
+          prop="api_param_key"
           label="参数名称"
           width="150">
         </el-table-column>
@@ -110,7 +110,7 @@
       <div slot="header" class="detail-card-header">
         <span>body参数</span>
       </div>
-      <el-input type="textarea" autosize v-model="params.body" disabled></el-input>
+      <el-input type="textarea" autosize v-model="body" disabled></el-input>
     </el-card>
 
     <el-card class="infocard">
@@ -132,7 +132,7 @@
     data () {
       return {
         query:[],
-        body:{},
+        body:'',
         api: {},
         activeName: "detail",
         header:[]
@@ -148,10 +148,11 @@
         service.getApiDetail ({api_id: api.api_id},(isOk, data) => {
           if(isOk){
             this.api=data.data.api
+            console.log(JSON.stringify(api))
             this.query=data.data.params.query
             this.header=data.data.params.header
-            var body=data.data.body;
-            this.body=this.formatJSON(JSON.stringify(body))
+            this.body=data.data.params.body;
+            console.log("body"+this.body)
           }else{
             this.$message({
               type: 'warning',

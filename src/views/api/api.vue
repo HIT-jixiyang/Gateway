@@ -130,15 +130,15 @@
   export default {
     data() {
       return {
-        active: 0,
+        active:0,
         api: {
           api_name: '',
-          api_bill_type: 0,
+          api_bill_type: null,
           api_description: '',
           api_error_return_demo: '',
-          api_max_in: 0,
-          api_method: 0,
-          api_timeout: 0,
+          api_max_in: null,
+          api_method: null,
+          api_timeout: null,
           api_normal_return_demo: '',
           api_test_interface: '',
           api_param_xml: '',
@@ -150,7 +150,7 @@
         },
 
         api_price: {
-          price:0,
+          price:0.0,
           content: 0
         }
       };

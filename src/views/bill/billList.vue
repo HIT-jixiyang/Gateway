@@ -1,7 +1,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      
+
       <el-input v-model="filter.app_id" style="width: 200px;" class="filter-item" placeholder="请输入appId"></el-input>
       <el-input v-model="filter.api_name" style="width: 200px;" class="filter-item" placeholder="请输入api名称"></el-input>
       <el-date-picker
@@ -89,6 +89,7 @@ export default {
       if (this.filter.app_id == null || this.filter.app_id == '')
         this.filter.app_id = null
       var params = this.filter
+      params.id=localStorage.getItem("id");
       service.getBillList(params,(isOk, data) => {
         this.tableData = data.data.data
         this.tableDataLength = data.data.total

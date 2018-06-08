@@ -2,9 +2,9 @@ import $ from 'jquery'
 require('../common/gbfl')
 export default class BizService {
   constructor () {
-    this.manageHost = 'http://localhost:10002'
-    this.fileUploadHost = 'http://localhost:8888'
-    this.fileSystemHost = 'http://localhost:9999'
+    this.manageHost = 'http://222.194.14.130:10002'
+    this.fileUploadHost = 'http://222.194.14.130:8888'
+    this.fileSystemHost = 'http://222.194.14.130:9999'
     this.method = {
       // 账单列表
       getBillList: '/bill/list',
@@ -31,8 +31,8 @@ export default class BizService {
       apiadd:'/sp/addapi',
       sptestXml:'/sp/test-param-xml',
       //api列表
-      getapilist:'/admin/getapilist',
-      getapidetail:'admin/getapidetail'
+      getapilist:'/getapilist',
+      getapidetail:'/admin/getapidetail'
     }
   }
   ajaxRequest (url, sendData, type, callback, contentType, async, beforeSend) {
@@ -202,6 +202,7 @@ export default class BizService {
       }
     },'application/json')
   }
+
   sptestXml (params, callback) {
     var url = this.manageHost + this.method.sptestXml
     var type = 'post'

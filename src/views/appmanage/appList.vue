@@ -89,7 +89,7 @@
         var params = {}
         params.pageNo = this.filter.pageNo
         params.pageSize = this.filter.pageSize
-        params.consumer_id= '87de254182574856af64d323869b686d'
+        params.consumer_id= localStorage.getItem("id");
         params.name=this.filter.value
         service.getAppList(params,(isOk, data) => {
           console.log(data)

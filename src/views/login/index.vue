@@ -81,8 +81,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'ices@hitwh.com',
-        password: 'ices'
+        username: 'ICES',
+        password: 'ICES'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur'}],
@@ -122,12 +122,23 @@ export default {
               var result = {
                 token: data.data.token
               }
-              if(this.role == '0')
+              if(this.role == '0'){
                 result.role = 'consumer'
-              else if(this.role == '1')
+                localStorage.setItem("role",0)
+                localStorage.setItem("id",data.data.consumer.consumer_id)
+              }
+
+              else if(this.role == '1'){
                 result.role = 'sp'
-              else if(this.role == '2')
+                localStorage.setItem("role",1)
+                localStorage.setItem("id",data.data.sp.sp_id)
+              }
+
+              else if(this.role == '2'){
                 result.role = 'admin'
+                localStorage.setItem("id",null)
+              }
+
 
               this.$store.dispatch('Login', result).then(() => {
                 this.loading = false
